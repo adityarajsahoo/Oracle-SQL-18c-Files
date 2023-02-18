@@ -1,0 +1,350 @@
+Oracle SQL
+
+sys and system users both have admin rights
+
+To work with DDl commands like create, drop, truncate, alter, rename we need
+administrative rights
+
+two types of tables
+-Data Dictionary
+-User Tables
+
+date datatype, we can also go by default value by default keyword
+sysdate returns the current date of the system
+
+To alter structure, we use alter table command
+-Adding Column
+-Modifying Column
+-Dropping Column
+-Renaming Column
+
+To add multiple column see code (Salary number(10,2) means upto 10 digit with 2 decimal places)
+We can also length or datatype of any column (modify)
+
+UNUSED
+Whenever we drop a particular column, all the data of that column is dropped and the memory
+is released. (a lot of resources goes in that - time consuming)
+
+To avoid that set unused code is used (memory is not released), used to avoid traffic. 
+You cannot recover/ cannot get the unused column back.
+You have to re-add to get it.
+
+--------------------------------------------------------------------------------------
+TRUNCATE (DDL, no rollback, memory will be released)
+For table skeleton to be there, but all data to be removed we can use truncate command.
+
+CONSTRAINTS (two types - column level, table level)
+for validating data
+eg- negative salary is not possible
+
+Types of Constraints:
+- NOT NULL (Emp name can't be left NULL-mandatory values)(can be app in column level)
+- UNIQUE (non duplicate value eg- mobile no, email address) (can be added on C and T level)
+- PRIMARY KEY (NOT NULL and UNIQUE) (1 PK in TABLE)
+- CHECK (When we want value to be of particular type eg- value should not be less than 5000)
+- FOREIGN KEY (Emp working in a dept, but dept table must be separate)
+
+We may or may not pass constraint keyword and name.
+Task - Passing not null constraint in firstname.
+
+Uniqueness is added to combination, in case of table level.
+Check individual uniqueness of both columns (EmailId, Mobile No)
+
+with ed the last executed command will be opened in a notepad.
+Later we will check all constraints .
+Check Constraint eg- gender (M or F), salary<5000 not allowed.
+Whenever we want to compare multiple values in equality, we can use in operator.
+
+Foreign key is used for referencial integrity - one column should refer another column
+- in same or different table
+The reference table should have one of those values which is there in the main table.
+- on delete cascade means, if a column is deleted from main table then values of that table will
+be deleted in the reference table as well.
+- on delete set null means related columns of that table will be set to null.
+
+------------------------------------------------------------------------------------
+MANAGING Constraints
+- Viewing Constraints
+- Adding Constraints
+- Disabling Constraints
+- Enabling Constraints
+- Dropping Constraints
+
+user_constraints gives data of all the constraints there
+c stands for not null (check constraint)
+The USER_CONS_COLUMNS tells you what columns make up the constraint. 
+-------------------------------------------------------------------------------------
+DML(Data Manipulation Language)
+- INSERT
+- UPDATE
+- DELETE
+- MERGE (combination insert and update, we go for atleast two tables)
+
+Multiple DML commands performing a logical task is called TRANSACTION
+- Use commit to save changes
+- Use rollback to undo changes
+
+To not write a syntax again use &id, &name
+/ for running previous code
+To see all the records entered, use select statement
+To adjust the width of columns, use column format commands like a10 (10 character width)
+--------------------------------------------------
+Updating based on conditions (making changes in fields)
+Merge statement is used to do conditional insert or update in a particular table (2 tables)
+c is the alias of the table
+If matching record is not there then new record will be merged.
+
+------------------------------------------------------
+When we write DML commands, transaction begins, so to manage them use commit or rollback
+DDL and DCL commands are auto committed
+DML commands needs to be managed
+Save point can be placed in the transaction as a marker for rollback.
+Disc means committed and ended.
+cle scr means clear screen.
+
+DDL, DCL will commit all the pending comments of DML.
+Transactions completed before they save point will be saved.
+savepoint then savepoint name eg - updations
+------------------------------------------------------------------
+
+SELECT Statement
+
+select statement is a part of data retrieval language, it allows us to read data from table.
+Select statement specifies the columns to search. * means all.
+From statement specifies the data source.
+
+Filtering output is called projection.
+|| is for concatenation
+in order to remove duplicates we can use distinct keyword.
+
+-------------------------------------------------------------------
+ORDER BY Statement
+
+For sorting the data we use order by statement.
+usage of column data, must be placed in last of command
+ordered by desc means descending order output - aliasing
+order by - alias, column name or sequel number
+Multiple column sorting
+
+----------------------------------------------------------------------
+WHERE Statement
+
+for filtering the data we use where statement and make conditions
+working with comparison operators(>,<,=,!=).
+
+LOGICAL operators
+If we want to pass multiple conditions then we can use logical operators(and,or,not)
+or used for getting single record
+----------------------------------------------------------------------
+SPECIAL operators (in, between and, like, isnull)
+
+if you want to compare multiple values in a select statement use (in operator)-not in is reverse
+for ranges comparison we can use (between and) - first lower limit and then upper limit
+like operator is used to compare a pattern eg - name matches
+for comparing null we can use is (null operator)
+
+NOTE
+% is a wild card character which means either zero or multiple characters
+eg - 'A%' means the first character should be A and rest can be whatever
+//y, '%a' means characters ending with a
+     'A__' means after A only 3 characters should be there
+
+null is not a value, so it can't be compared with =
+so we use (is null) operator
+-----------------------------------------------------------------------
+FUNCTIONS
+
+To manipulate the data we go for functions
+set of statements to perform a particular task
+
+Types of functions: 
+- Single Row Function(applied on each row-returns one value)
+      - char fn
+	- num fn
+	- date fn
+	- conversion fn
+	- general fn
+
+- Multi Row Function(applied on mul rows-returns one value)
+	
+---------------------------------------------------------------------------
+CHAR Fn
+- Case Manipulation
+- Char Manipulation
+
+Comparing a string in SQL is case sensitive
+upper() and lower() converts string to upper and lower letters.
+
+NOTE: dual is a dummy table that does not exist
+getting char whoes len is 5 - Length method
+concat method, substr method, rpad & lpad method
+---------------------------------------------------------------------------
+NUMBER Fn
+mod, round, truncate fn
+
+- round will set value to upper limit, and may change
+- truncate will set value only to lower limit
+---------------------------------------------------------------------------
+
+DATE Fn
+
+- To convert simple string to a date, we use to_string() fn.
+- We can also find difference in the number of days.
+
+Methods associated with the date datatype
+- next_day eg - when does next monday fall after 26th Jan 17
+- to add months to a particular date we can use add_month function
+---------------------------------------------------------------------------
+
+Conversion Functions
+
+- We may need to convert a data to an other type
+- 2 types of conversion (implicit, type conversion)
+- Varchar2 and Char implicitly converts to number or date
+- type conversion can be done explicitly
+  eg - to_date is a conversion fn
+- day when the employee was hired
+- ddsp - to get spelling of particular date
+- ddspth - 25th jan 
+- to get time from a particular date
+- adding number to today's date
+---------------------------------------------------------------------------
+
+General Fns
+
+Used for dealing with null values - eg: null(firstname) + value(lastname) = null
+nvl function will return the first not null value (check of if null or not null)
+coalesce fn will return first not null value (like ?: operator in C++) - if null salary
+then 5000 print
+---------------------------------------------------------------------------
+
+JOINS (IMP)
+- For retriving the data from multiple tables.
+eg - I want get the city of employee, it might be in city table
+- at least one common field must be there to create a join.
+- Joins can be classified on the basis of data retrieval
+
+Types of Joins (Oracle Proprietary Joins)
+- Equijoins(use of =), Non Equijoins aka Inner joins
+- Outer Joins(left or right)(one shows all the details)
+- Self Joins(joining by itself)
+
+A single table can have multiple entities, and we can get data from multiple entities.
+When we retrieve data from both the tables, we get a cartesian product output.
+- See table prefix e.emp = d.dept....
+- Outer Join (+)
+- Splitting the table
+----------------------------------------------------------------------------
+SQL compliant joins
+
+- Cross Join (cartesian product output)(multiplication)
+- Natural Join (no need to specify common filed, it takes automatically)(joins all common)
+- Joins through using clause
+- Full outer join (L + R data)
+- only using keyword join will be equivalent to inner join (only takes common data)
+- on clause when two tables have diff field names.(case of multiple fields)
+- join using more than two tables(3 tables data merged)(employees->departments, locations join)
+- Outer join(two tables)(L , R)
+- full outer join = will combine both L and R tables data
+-----------------------------------------------------------------------------
+Group fns
+
+- will return single output, as the whole table will be considered as a group.
+- Group functions are also called aggregate functions
+eg - to do operations with salary, like total salary
+count, min, max, sum, avg stdev are commonly used functions.
+- so we perform calculations on a set of values and return a single value.
+------------------------------------------------------------------------------
+Group By Clause
+
+- grouping complete table into smaller tables(logically).
+- specify name of column for grouping
+- if from output, we filter group we use having clause.
+- order by will align
+- where = for row
+- having = for groups
+------------------------------------------------------------------------------
+Advanced Grouping
+
+- Roleup operation is used for subtotal
+- Cube operation to produce cross tabulation values(subtotal based on 1st column)
+(subtotal based on 2 columns and then total based on job id) )
+- Grouping sets to produce a single result set
+- code for overall total
+- sequence not followed in cube
+- groupin = 0 is participation, 1 is not participation
+------------------------------------------------------------------------------
+Subqueries
+
+- used when we dont know the exact values for comparison.
+- query within a query is called subquery.
+- inner query executes first and returns the result to outer query.
+
+Sub queries classification
+
+- single row subquery
+- multi row subquery
+
+eg - increment salary of all those employees who are working in the same department as Isahgi
+(for this we use subqueries and update statement)
+- Salary of employees earning min 
+- 2nd highest salary
+-------------------------------------------------------------------------------
+Advanced Subqueries
+
+- inner query dependent on outer&vice versa(corelated subquery-finding max salary from each row)
+- multi column subquery(taking multiple column & comparing them)
+- from subquery(from keyword having subquery)
+- with clause(for simplicity)
+-------------------------------------------------------------------------------
+Creating Sequences
+
+- automatically generates unique numbers
+- is used to create primary key value
+- can be shared (can be used for multiple columns)
+
+- Terminologies
+	- Max value / no Max value(till what value we want increment)
+	- cycle / no cycle (upon reaching max value back to first value)
+	- cache / no cache (storing values in temporary place)
+-------------------------------------------------------------------------------
+Creating Index
+
+- Used for speeding up fetching 
+- columns having unique key, primary key, etc are already indexed
+- data coming from a primary key, unique key is faster than data coming from normal fields
+- managed by Oracle server
+- index should be created on the fields where there are no keys
+- index should be created where very less number of rows are to be fetched in a large table
+eg - out of 1000, we need 2 data, then use index
+-------------------------------------------------------------------------------
+Creating Synonyms
+
+- provides easy way to access the table, owned by another user
+- it also shortens lengthy table name
+-------------------------------------------------------------------------------
+Creating Users
+
+In Oracle 12c and above, we have two types of databases:
+
+- Container DataBase (CDB), and
+- Pluggable DataBase (PDB).
+
+You must have created the database as a container database. 
+While, you are trying to create user in the container, i.e. CDB$ROOT, however, 
+you should create the user in the PLUGGABLE database.
+
+You are not supposed to create application-related objects in the container, 
+the container holds the metadata for the pluggable databases. 
+You should use the pluggable database for you general database operations.
+
+- tnsping will give the path
+-------------------------------------------------------------------------------
+Managing User Access
+
+- Use grant command to provide access to any user
+- giving access to object privileges
+-------------------------------------------------------------------------------
+Managing Roles
+
+- managing many users
